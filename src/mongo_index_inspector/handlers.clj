@@ -129,9 +129,14 @@
        [:th "Sparse"]
        [:th "Unique"]]
       (for [partition partitioned-indexes
-            :let [matching? (= number-of-environments (count partition))]]
+            :let [present-in-multiple-environments? (> (count partition) 1)
+                  present-in-all-environments? (= number-of-environments (count partition))
+                  same-name-in-all-environments? (= 1 (->> partition (map :name) set count))]]
         (for [{:keys [database collection key expire-after-seconds hidden partial-filter-expression sparse unique name environment]} partition]
-          [:tr {:class (when matching? "matching-index")}
+          [:tr {:class (cond
+                         (and same-name-in-all-environments? present-in-all-environments?) "good" 
+                         (and (not same-name-in-all-environments?) present-in-all-environments?) "ok"
+                         (and present-in-multiple-environments? (not same-name-in-all-environments?)) "warning")}
            [:td database]
            [:td collection]
            [:td name]

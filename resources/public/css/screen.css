@@ -107,6 +107,14 @@ th {
     font-weight: bold;
 }
 
-tr.matching-index {
+tr.good {
     background-color: #d9f2d9;
+}
+
+tr.warning {
+    background-color: #ff9797;
+}
+
+tr.ok {
+    background-color: #fff9d0;
 }

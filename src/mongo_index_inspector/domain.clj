@@ -50,10 +50,10 @@
      :name name
      :environment environment-name}))
 
-(defn extract-index [{:keys [collection key expire-after-seconds hidden partial-filter-expression sparse unique name]}]
-  [collection key expire-after-seconds hidden partial-filter-expression sparse unique name])
+(defn extract-index [{:keys [collection key expire-after-seconds hidden partial-filter-expression sparse unique]}]
+  [collection key expire-after-seconds hidden partial-filter-expression sparse unique])
 
-(defn index-map-to-vector [{:keys [database collection key expire-after-seconds hidden partial-filter-expression sparse unique name environment]}]
-[database collection (str key) expire-after-seconds hidden (str partial-filter-expression) sparse unique name environment])
+(defn index-map-to-vector [{:keys [database collection key expire-after-seconds hidden partial-filter-expression sparse unique environment]}]
+[database collection (str key) expire-after-seconds hidden (str partial-filter-expression) sparse unique environment])
 
 (defn index-comparator [x y] (compare (index-map-to-vector x) (index-map-to-vector y)))
