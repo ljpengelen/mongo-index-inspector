@@ -60,9 +60,9 @@
    (form/form-to
     [:post "/environments/add"]
     [:label "Name"
-     (form/text-field {:maxlength 100 :required true} :name)]
+     (form/text-field {:required true} :name)]
     [:label "URI"
-     (form/text-field {:maxlength 100 :required true} :uri)]
+     (form/text-field {:required true} :uri)]
     (confirmation-button "Add environment"))))
 
 (defn create-environment [{:keys [datasource]} request]
