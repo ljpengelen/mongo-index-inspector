@@ -120,28 +120,28 @@
       [:tr
        [:th "Database"]
        [:th "Collection"]
+       [:th "Name"]
+       [:th "Environment"]
        [:th "Key"]
        [:th "Expire after seconds"]
        [:th "Hidden"]
        [:th "Partial-filter expression"]
        [:th "Sparse"]
-       [:th "Unique"]
-       [:th "Name"]
-       [:th "Environment"]]
+       [:th "Unique"]]
       (for [partition partitioned-indexes
             :let [matching? (= number-of-environments (count partition))]]
         (for [{:keys [database collection key expire-after-seconds hidden partial-filter-expression sparse unique name environment]} partition]
           [:tr {:class (when matching? "matching-index")}
            [:td database]
            [:td collection]
+           [:td name]
+           [:td environment]
            [:td (str key)]
            [:td expire-after-seconds]
            [:td hidden]
            [:td (str partial-filter-expression)]
            [:td sparse]
-           [:td unique]
-           [:td name]
-           [:td environment]]))])))
+           [:td unique]]))])))
 
 (defn render-domain-exception-page [exception]
   (let [{:keys [ui-message]} (ex-data exception)]
