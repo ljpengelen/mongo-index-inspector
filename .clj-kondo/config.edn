@@ -1,0 +1,1 @@
+{:lint-as {hiccup.def/defelem clojure.core/defn}}

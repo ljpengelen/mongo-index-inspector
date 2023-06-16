@@ -1,0 +1,26 @@
+{:paths ["src" "resources"]
+ :deps {com.github.seancorfield/next.jdbc {:mvn/version "1.2.780"}
+        com.layerware/hugsql-core {:mvn/version "0.5.1"}
+        com.layerware/hugsql-adapter-next-jdbc {:mvn/version "0.5.1"
+                                                :exlusions [seancorfield/next.jdbc]}
+        com.novemberain/monger {:mvn/version "3.5.0"}
+        hiccup/hiccup {:mvn/version "1.0.5"}
+        http-kit/http-kit {:mvn/version "2.5.3"}
+        integrant/integrant {:mvn/version "0.8.0"}
+        ch.qos.logback/logback-classic {:mvn/version "1.4.5"}
+        metosin/reitit-ring {:mvn/version "0.5.15"}
+        migratus/migratus {:mvn/version "1.3.5"}
+        org.clojure/clojure {:mvn/version "1.11.0"}
+        org.clojure/data.json {:mvn/version "2.4.0"}
+        org.xerial/sqlite-jdbc {:mvn/version "3.36.0.3"}
+        ring/ring-core {:mvn/version "1.9.5"}
+        ring/ring-devel {:mvn/version "1.9.5"}
+        yogthos/config {:mvn/version "1.1.8"}}
+ :ns-default mongo-index-inspector.core
+ :aliases {:dev {:extra-deps {integrant/repl {:mvn/version "0.3.2"}
+                              io.github.ljpengelen/integrant-repl-autoreload {:git/sha "2ae624990a7039184c2494546e3704155e9b353c"}}
+                 :extra-paths ["dev"]}
+           :run {:exec-fn mongo-index-inspector.core/-main}
+           :uberjar {:paths ["."]
+                     :deps {io.github.clojure/tools.build {:git/tag "v0.8.1" :git/sha "7d40500"}}
+                     :exec-fn build/uber}}}

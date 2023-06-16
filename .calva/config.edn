@@ -1,0 +1,25 @@
+{:customREPLCommandSnippets
+ [{:name "Run migrations"
+   :snippet "(migrations/migrate!)"
+   :ns "user"
+   :key "m"}
+  {:name "Start app"
+   :snippet (go)
+   :ns "user"
+   :key "s"}
+  {:name "Open app in browser"
+   :snippet (browse-url "http://localhost:3000/")
+   :ns "user"
+   :key "b"}
+    {:name "Restart app"
+     :snippet (reset)
+     :ns "user"
+     :key "r"}
+  {:name "Automatically restart app"
+   :snippet (start-auto-reset {:relevant-file? (constantly true)})
+   :ns "user"
+   :key "a"}
+  {:name "Stop app"
+   :snippet (halt)
+   :ns "user"
+   :key "h"}]}

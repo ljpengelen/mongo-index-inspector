@@ -1,0 +1,2 @@
+{:jdbc-url "jdbc:sqlite:mongo-index-inspector.db"
+ :port 3000}

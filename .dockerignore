@@ -1,0 +1,13 @@
+.calva
+.clj-kondo
+.cpcache
+.git
+.lsp
+dev
+dockerfiles
+target
+.dockerignore
+.gitignore
+.nrepl-port
+*.db
+*.md
