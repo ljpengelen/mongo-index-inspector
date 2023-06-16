@@ -32,12 +32,10 @@
   (logging/create-logger))
 
 (defmethod ig/init-key ::mongo-client [_ _]
-  (println "Creating mongo client")
   (let [client (mongo-client/create-mongo-client!)]
     client))
 
 (defmethod ig/init-key ::handler [_ state]
-  (println state)
   (app state))
 
 (defn error-logger [logger]

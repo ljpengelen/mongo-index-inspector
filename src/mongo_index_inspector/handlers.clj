@@ -1,6 +1,5 @@
 (ns mongo-index-inspector.handlers 
-  (:require [clojure.pprint :as pprint]
-            [hiccup.core :refer [h]]
+  (:require [hiccup.core :refer [h]]
             [hiccup.form :as form]
             [hiccup.page :as hp]
             [mongo-index-inspector.domain :as domain]
@@ -115,7 +114,6 @@
   (let [indexes (domain/get-all-indexes datasource)
         number-of-environments (count indexes)
         partitioned-indexes (partition-by domain/extract-index (sort domain/index-comparator (domain/flatten-indexes indexes)))]
-    (clojure.pprint/pprint (take 200 partitioned-indexes))
     (page
      [:h1 "Overview of indexes"]
      [:table
