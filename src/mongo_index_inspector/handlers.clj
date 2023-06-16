@@ -137,9 +137,9 @@
            [:td name]
            [:td environment]
            [:td (str key)]
-           [:td expire-after-seconds]
+           [:td (or expire-after-seconds "-")]
            [:td hidden]
-           [:td (str partial-filter-expression)]
+           [:td (str (or partial-filter-expression "-"))]
            [:td sparse]
            [:td unique]]))])))
 
