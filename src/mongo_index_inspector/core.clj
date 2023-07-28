@@ -1,5 +1,6 @@
 (ns mongo-index-inspector.core
-  (:require [config.core :refer [env]]
+  (:require [clojure.java.browse :refer [browse-url]]
+            [config.core :refer [env]]
             [integrant.core :as ig]
             [mongo-index-inspector.db :as db]
             [mongo-index-inspector.logging :as logging]
@@ -61,4 +62,5 @@
 
 (defn -main [& _]
   (migrations/migrate!)
-  (ig/init system-config))
+  (ig/init system-config)
+  (browse-url "http://localhost:3000/"))
