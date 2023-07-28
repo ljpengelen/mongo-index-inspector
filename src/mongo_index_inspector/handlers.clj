@@ -1,5 +1,7 @@
 (ns mongo-index-inspector.handlers 
-  (:require [hiccup.core :refer [h]]
+  (:require [clojure.data.json :as json]
+            [clojure.string :as string]
+            [hiccup.core :refer [h]]
             [hiccup.form :as form]
             [hiccup.page :as hp]
             [mongo-index-inspector.domain :as domain]
@@ -110,6 +112,9 @@
       "The indexes for environment " [:span {:title uri} (h name)] " could not be collected."]
      [:a {:href "/"} "Back to overview of environments"])))
 
+(defn to-json [edn]
+  (if edn (string/replace (json/write-str edn) "\"" "'") "-"))
+
 (defn render-index-overview-page [{:keys [datasource]} _]
   (let [indexes (domain/get-all-indexes datasource)
         number-of-environments (count indexes)
@@ -141,10 +146,10 @@
            [:td collection]
            [:td name]
            [:td environment]
-           [:td (str key)]
+           [:td (to-json key)]
            [:td (or expire-after-seconds "-")]
            [:td hidden]
-           [:td (str (or partial-filter-expression "-"))]
+           [:td (to-json partial-filter-expression)]
            [:td sparse]
            [:td unique]]))])))
 
