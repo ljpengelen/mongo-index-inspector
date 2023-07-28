@@ -4,7 +4,7 @@
 (def version (format "0.1.%s" (b/git-count-revs nil)))
 (def class-dir "target/classes")
 (def basis (b/create-basis {:project "deps.edn"}))
-(def uber-file (format "target/lmongo-index-inspector-%s-standalone.jar" version))
+(def uber-file (format "target/mongo-index-inspector-%s-standalone.jar" version))
 
 (defn clean [_]
   (b/delete {:path "target"}))
