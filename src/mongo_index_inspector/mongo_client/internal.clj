@@ -13,9 +13,16 @@
 (defn get-database-names [client]
   (disj (m/get-db-names client) "admin" "config" "local"))
 
+(defn number-to-int [value]
+  (if (number? value) (int value) value))
+
+(defn normalize-index [index]
+  (update index :key (fn [key] (update-vals key number-to-int))))
+
 (defn get-indexes-for-collection [database collection-name]
   (try
-    (indexes-on database collection-name)
+    (->> (indexes-on database collection-name)
+         (map normalize-index))
     (catch MongoCommandException _ [])))
 
 (defn get-indexes-for-database [client database-name]
