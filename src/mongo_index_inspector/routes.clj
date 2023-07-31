@@ -35,7 +35,8 @@
         ["/error" {:get h/render-unable-to-collect-indexes-page}]]
        ["/remove" {:get h/render-delete-environment-page
                    :post h/delete-environment}]]]
-     ["/indexes" {:get h/render-index-overview-page}]]
+     ["/indexes" {:get h/render-index-overview-page}]
+     ["/operations" {:get h/render-operation-overview-page}]]
     {:data {:middleware [[wrap-pretty-exceptions logger]
                          wrap-params
                          wrap-keyword-params

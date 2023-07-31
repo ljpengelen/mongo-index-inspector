@@ -53,7 +53,10 @@
            [:td (secondary-button-link (str "/environments/" environment-id "/remove") "Remove from overview")]])])
      [:div {:class "horizontal-buttons"}
       (primary-button-link "/environments/add" "Add environment")
-      (when (seq environments) (primary-button-link "/indexes" "Compare indexes"))])))
+      (when (seq environments)
+        (list
+         (primary-button-link "/indexes" "Compare indexes")
+         (primary-button-link "/operations" "Show alignment operations")))])))
 
 (defn render-create-environment-page [_ _]
   (page
@@ -152,6 +155,33 @@
            [:td (to-json partial-filter-expression)]
            [:td sparse]
            [:td unique]]))])))
+
+(defn render-operation-overview-page [{:keys [datasource]} _]
+  (let [indexes (domain/get-all-indexes datasource)
+        number-of-environments (count indexes)
+        partitioned-indexes (partition-by domain/extract-index (sort domain/index-comparator (domain/flatten-indexes indexes)))]
+    (page
+     [:h1 "Overview of alignment operations"]
+     (for [partition partitioned-indexes
+           :let [present-in-all-environments? (= number-of-environments (count partition))
+                 same-name-in-all-environments? (= 1 (->> partition (map :name) set count))]
+           :when (not present-in-all-environments?)
+           :let [{:keys [database collection key hidden partial-filter-expression sparse unique name]} (first partition)]]
+       (list
+        [:h2 (str database " - " collection)]
+        [:pre
+         [:code
+          (str
+           "mongoIndexOperations."
+           (if same-name-in-all-environments? "createIndex" "createIndexWithPreferredName")
+           "(MongoIndexSpecification.builder()\n"
+           "\t.name(\"" name "\")\n"
+           "\t.definition(\"" (to-json key) "\")\n"
+           (when hidden "\t.hidden(true)\n")
+           (when sparse "\t.sparse(true)\n")
+           (when unique "\t.unique(true)\n")
+           (when partial-filter-expression (str "\t.partialFilterExpression(\"" (to-json partial-filter-expression) "\")\n"))
+           "\t.build());")]])))))
 
 (defn render-domain-exception-page [exception]
   (let [{:keys [ui-message]} (ex-data exception)]

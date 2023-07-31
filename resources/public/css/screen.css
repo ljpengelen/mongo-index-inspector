@@ -20,6 +20,18 @@ h1 {
     margin-bottom: 1.5rem;
 }
 
+h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+}
+
+pre {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",  "Courier New", monospace;
+    margin-bottom: 1.25rem;
+}
+
 p, form {
     margin: 1rem 0;
 }
