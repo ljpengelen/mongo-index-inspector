@@ -51,7 +51,7 @@
      :environment environment-name}))
 
 (defn extract-index [{:keys [collection key expire-after-seconds hidden partial-filter-expression sparse unique]}]
-  [collection key expire-after-seconds hidden partial-filter-expression sparse unique])
+  [collection (str key) expire-after-seconds hidden partial-filter-expression sparse unique])
 
 (defn index-map-to-vector [{:keys [database collection key expire-after-seconds hidden partial-filter-expression sparse unique environment]}]
 [database collection (str key) expire-after-seconds hidden (str partial-filter-expression) sparse unique environment])
