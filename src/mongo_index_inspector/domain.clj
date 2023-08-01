@@ -38,22 +38,23 @@
         [database-name indexes-for-db] indexes-for-dbs
         [collection-name indexes-for-collection] indexes-for-db
         index-for-collection indexes-for-collection
-        :let [{:keys [key name sparse unique hidden expireAfterSeconds partialFilterExpression]} index-for-collection]]
+        :let [{:keys [key name sparse unique hidden expireAfterSeconds partialFilterExpression collation]} index-for-collection]] 
     {:database database-name
      :collection collection-name
      :key key
      :expire-after-seconds expireAfterSeconds
      :hidden (true? hidden)
      :partial-filter-expression partialFilterExpression
+     :collation collation
      :sparse (true? sparse)
      :unique (true? unique) 
      :name name
      :environment environment-name}))
 
-(defn extract-index [{:keys [collection key expire-after-seconds hidden partial-filter-expression sparse unique]}]
-  [collection (str key) expire-after-seconds hidden partial-filter-expression sparse unique])
+(defn extract-index [{:keys [collection key expire-after-seconds hidden partial-filter-expression sparse unique collation]}]
+  [collection (str key) expire-after-seconds hidden partial-filter-expression sparse unique collation])
 
-(defn index-map-to-vector [{:keys [database collection key expire-after-seconds hidden partial-filter-expression sparse unique environment]}]
-[database collection (str key) expire-after-seconds hidden (str partial-filter-expression) sparse unique environment])
+(defn index-map-to-vector [{:keys [database collection key expire-after-seconds hidden partial-filter-expression sparse unique collation environment]}]
+[database collection (str key) expire-after-seconds hidden (str partial-filter-expression) sparse unique (str collation) environment])
 
 (defn index-comparator [x y] (compare (index-map-to-vector x) (index-map-to-vector y)))

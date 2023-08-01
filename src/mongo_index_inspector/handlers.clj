@@ -141,12 +141,13 @@
        [:th "Hidden"]
        [:th "Partial-filter expression"]
        [:th "Sparse"]
-       [:th "Unique"]]
+       [:th "Unique"]
+       [:th "Collation"]]
       (for [partition partitioned-indexes
             :let [present-in-multiple-environments? (> (count partition) 1)
                   present-in-all-environments? (= number-of-environments (count partition))
                   same-name-in-all-environments? (= 1 (->> partition (map :name) set count))]]
-        (for [{:keys [database collection key expire-after-seconds hidden partial-filter-expression sparse unique name environment]} partition]
+        (for [{:keys [database collection key expire-after-seconds hidden partial-filter-expression sparse unique name environment collation]} partition]
           [:tr {:class (cond
                          (and same-name-in-all-environments? present-in-all-environments?) "good" 
                          (and (not same-name-in-all-environments?) present-in-all-environments?) "ok"
@@ -160,7 +161,8 @@
            [:td hidden]
            [:td (to-json partial-filter-expression)]
            [:td sparse]
-           [:td unique]]))])))
+           [:td unique]
+           [:td (to-json collation)]]))])))
 
 (defn render-operation-overview-page [{:keys [datasource]} _]
   (let [indexes (domain/get-all-indexes datasource)
@@ -175,7 +177,7 @@
      (for [partition partitioned-indexes
            :let [present-in-all-environments? (= number-of-environments (count partition))
                  same-name-in-all-environments? (= 1 (->> partition (map :name) set count))]
-           :let [{:keys [database collection key hidden partial-filter-expression sparse unique name]} (first partition)]]
+           :let [{:keys [database collection key hidden partial-filter-expression sparse unique name collation]} (first partition)]]
        (list
         [:h2 (str database " - " collection)]
         [:pre {:class (when present-in-all-environments? "good")}
@@ -190,6 +192,7 @@
            (when sparse "\t.sparse(true)\n")
            (when unique "\t.unique(true)\n")
            (when partial-filter-expression (str "\t.partialFilterExpression(\"" (to-json partial-filter-expression) "\")\n"))
+           (when collation (str "\t.collation(\"" (to-json collation) "\")\n"))
            "\t.build());")]])))))
 
 (defn render-domain-exception-page [exception]
