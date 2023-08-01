@@ -124,6 +124,12 @@
         partitioned-indexes (partition-by domain/extract-index (sort domain/index-comparator (domain/flatten-indexes indexes)))]
     (page
      [:h1 "Overview of indexes"]
+     [:p
+      "This is an overview of indexes on all environments. "
+      "Green indexes exist on all environments, and all instances are exactly the same. "
+      "Yellow indexes exist on all environments, but the name differs on one ore more environments. "
+      "Red indexes exist on some environments, but not all. More than one name is used for the same index. "
+      "All other indexes exist on some environments, but not all. The same name is used for each instance of the index."]
      [:table
       [:tr
        [:th "Database"]
@@ -162,14 +168,17 @@
         partitioned-indexes (partition-by domain/extract-index (sort domain/index-comparator (domain/flatten-indexes indexes)))]
     (page
      [:h1 "Overview of alignment operations"]
+     [:p
+      "This is an overview of all indexes that need to be created to have the same indexes on all environments. "
+      "Each index is shown in the form of a copy-pasteable MongoIndexOperation. "
+      "The green indexes are already present in all environments."]
      (for [partition partitioned-indexes
            :let [present-in-all-environments? (= number-of-environments (count partition))
                  same-name-in-all-environments? (= 1 (->> partition (map :name) set count))]
-           :when (not present-in-all-environments?)
            :let [{:keys [database collection key hidden partial-filter-expression sparse unique name]} (first partition)]]
        (list
         [:h2 (str database " - " collection)]
-        [:pre
+        [:pre {:class (when present-in-all-environments? "good")}
          [:code
           (str
            "mongoIndexOperations."

@@ -29,11 +29,13 @@ h2 {
 
 pre {
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",  "Courier New", monospace;
+    font-size: 0.875rem;
     margin-bottom: 1.25rem;
 }
 
 p, form {
     margin: 1rem 0;
+    max-width: 50rem;
 }
 
 form {
@@ -119,14 +121,14 @@ th {
     font-weight: bold;
 }
 
-tr.good {
+.good {
     background-color: #d9f2d9;
 }
 
-tr.warning {
+.warning {
     background-color: #ff9797;
 }
 
-tr.ok {
+.ok {
     background-color: #fff9d0;
 }
